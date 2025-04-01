@@ -1,0 +1,15 @@
+{% extends "main/index.html" %}
+
+{% block title %}Добавление удобрения{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-success">Новое удобрение</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Сохранить</button>
+        <a href="{% url 'profile' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

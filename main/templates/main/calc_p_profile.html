@@ -1,0 +1,172 @@
+{% extends "main/index.html" %}
+
+{% block title %}Калькулятор профиля питания{% endblock %}
+{% block content %} 
+<div class="container">
+
+<h1>Макропрофиль</h1>
+    <table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>Элемент</th>
+            <th>мг/л</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>N</td>
+            <td><input id="N" class="form-control" type="number" step="0.01" value="100"></td>
+        </tr>
+        <tr>
+            <td>P</td>
+            <td><input id="P" class="form-control" type="number" step="0.01" value="20"></td>
+        </tr>
+        <tr>
+            <td>K</td>
+            <td><input id="K" class="form-control" type="number" step="0.01" value="50"></td>
+        </tr>
+        <tr>
+            <td>Ca</td>
+            <td><input id="Ca" class="form-control" type="number" step="0.01" value="60"></td>
+        </tr>
+        <tr>
+            <td>Mg</td>
+            <td><input id="Mg" class="form-control" type="number" step="0.01" value="25"></td>
+        </tr>
+        <tr>
+            <td>S</td>
+            <td><input id="S" class="form-control" type="number" step="0.01" value="15"></td>
+        </tr>
+    </tbody>
+  </table>
+
+<h1>Матрица соотношений</h1>
+    <table class="table table-bordered" id="ratioTable">
+    <thead class="table-light">
+        <tr>
+          <th></th>
+          <th>N</th>
+          <th>P</th>
+          <th>K</th>
+          <th>Ca</th>
+          <th>Mg</th>
+          <th>S</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>N</td>
+            <td>-</td>
+            <td><input id="P/N" class="form-control" type="number" step="0.01"></td>
+            <td><input id="K/N" class="form-control" type="number" step="0.01"></td>
+            <td><input id="Ca/N" class="form-control" type="number" step="0.01"></td>
+            <td><input id="Mg/N" class="form-control" type="number" step="0.01"></td>
+            <td><input id="S/N" class="form-control" type="number" step="0.01"></td>
+        </tr>
+        <tr>
+            <td>P</td>
+            <td><input id="N/P" class="form-control" type="number" step="0.01"></td>
+            <td>-</td>
+            <td><input id="K/P" class="form-control" type="number" step="0.01"></td>
+            <td><input id="Ca/P" class="form-control" type="number" step="0.01"></td>
+            <td><input id="Mg/P" class="form-control" type="number" step="0.01"></td>
+            <td><input id="S/P" class="form-control" type="number" step="0.01"></td>
+        </tr>
+        <tr>
+            <td>K</td>
+            <td><input id="N/K" class="form-control" type="number" step="0.01"></td>
+            <td><input id="P/K" class="form-control" type="number" step="0.01"></td>
+            <td>-</td>
+            <td><input id="Ca/K" class="form-control" type="number" step="0.01"></td>
+            <td><input id="Mg/K" class="form-control" type="number" step="0.01"></td>
+            <td><input id="S/K" class="form-control" type="number" step="0.01"></td>
+        </tr>
+        <tr>
+            <td>Ca</td>
+            <td><input id="N/Ca" class="form-control" type="number" step="0.01"></td>
+            <td><input id="P/Ca" class="form-control" type="number" step="0.01"></td>
+            <td><input id="K/Ca" class="form-control" type="number" step="0.01"></td>
+            <td>-</td>
+            <td><input id="Mg/Ca" class="form-control" type="number" step="0.01"></td>
+            <td><input id="S/Ca" class="form-control" type="number" step="0.01"></td>
+        </tr>
+        <tr>
+            <td>Mg</td>
+            <td><input id="N/Mg" class="form-control" type="number" step="0.01"></td>
+            <td><input id="P/Mg" class="form-control" type="number" step="0.01"></td>
+            <td><input id="K/Mg" class="form-control" type="number" step="0.01"></td>
+            <td><input id="Ca/Mg" class="form-control" type="number" step="0.01"></td>
+            <td>-</td>
+            <td><input id="S/Mg" class="form-control" type="number" step="0.01"></td>
+        </tr>
+        <tr>
+            <td>S</td>
+            <td><input id="N/S" class="form-control" type="number" step="0.01"></td>
+            <td><input id="P/S" class="form-control" type="number" step="0.01"></td>
+            <td><input id="K/S" class="form-control" type="number" step="0.01"></td>
+            <td><input id="Ca/S" class="form-control" type="number" step="0.01"></td>
+            <td><input id="Mg/S" class="form-control" type="number" step="0.01"></td>
+            <td>-</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    const macros = ["N", "P", "K", "Ca", "Mg", "S"];
+
+    function fillTable() {
+        for (const macr1 of macros) {
+            for (const macr2 of macros) {
+                if (macr1 !== macr2) {
+                    const value1 = parseFloat(document.getElementById(macr1).value);
+                    const value2 = parseFloat(document.getElementById(macr2).value);
+                    document.getElementById(`${macr1}/${macr2}`).value = (value1 / value2).toFixed(3);
+                }
+            }
+        }
+    }
+    
+    function recalcMacr(e) {
+        const name = e.target.id;
+        e.target.value = parseFloat(e.target.value).toFixed(3);
+        const newValue = parseFloat(e.target.value);
+        
+        for (const macr of macros) {
+            if (macr !== name) {
+                const otherValue = parseFloat(document.getElementById(macr).value);
+                document.getElementById(`${macr}/${name}`).value = (otherValue / newValue).toFixed(3);
+                document.getElementById(`${name}/${macr}`).value = (newValue / otherValue).toFixed(3);
+            }
+        }
+    }
+
+    function recalcRatio(e) {
+        [col, row] = e.target.id.split('/');
+        e.target.value = parseFloat(e.target.value).toFixed(3);
+        document.getElementById(col).value = (parseFloat(e.target.value) * parseFloat(document.getElementById(row).value)).toFixed(3);
+        const newValue = parseFloat(document.getElementById(col).value);
+        for (const macr of macros){
+            if (macr !== row && macr !== col){
+                document.getElementById(macr).value = (parseFloat(document.getElementById(`${macr}/${col}`).value) * newValue).toFixed(3);
+            }
+        }
+        
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        fillTable();
+        
+        macros.forEach(macr => {
+            document.getElementById(macr).addEventListener('change', recalcMacr);
+        });
+        
+        macros.forEach(macr1 => {
+            macros.forEach(macr2 => {
+                if (macr1 !== macr2) {
+                        document.getElementById(`${macr1}/${macr2}`).addEventListener('change', recalcRatio);
+                    }
+                })
+            });
+        });
+
+</script>{% endblock %}

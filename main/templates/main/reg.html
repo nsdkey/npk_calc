@@ -1,0 +1,20 @@
+{% extends "main/index.html" %}
+
+{% block title %}Login{% endblock %}
+{% block content %}{% if error %}
+<div class="alert alert-danger w-75 mx-auto mt-3" role="alert">
+    {{ error }}
+</div>
+{% endif %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="usrnm" class="form-label">Логин:</label>
+        <input name="username" type="text" class="form-control" id="usrnm" placeholder="Введите логин">
+        <label for="psw" class="form-label">Пароль:</label>
+        <input name="password" type="password" class="form-control" id="psw" placeholder="Введите пароль">
+        <label for="psw2" class="form-label">Подтвердите пароль:</label>
+        <input name="password2" type="password" class="form-control" id="psw2" placeholder="Введите пароль ещё раз">
+    </div>
+    <button type="submit" class="btn btn-primary px-4">Зарегистрироваться</button>
+</form>{% endblock %}

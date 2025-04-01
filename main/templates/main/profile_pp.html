@@ -1,0 +1,87 @@
+{% extends "main/index.html" %}
+
+{% block title %}Профиль с удобрениями{% endblock %}
+{% block content %}
+<div class="container py-3">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h1 class="card-title">Профиль пользователя: {{ user.username }}</h1>
+        </div>
+    </div>
+
+    <div class="container text-center mt-4">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <a href="{% url 'profile' %}" class="btn btn-success w-100 py-3">Удобрения</a>
+            </div>
+            <div class="col-md-6">
+                <a href="{% url 'profile_pp' %}" class="btn btn-primary w-100 py-3">Профили питания</a>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container py-3">
+        <h2 class="text-success mb-4">Ваши профили питания растений:</h2>
+    
+        {% for p_profile in p_profiles %}
+        <div class="card mb-4 shadow-sm p-3 rounded">
+            <div class="card-body">
+                <h3 class="card-title text-center">{{ p_profile.name }}</h3>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+                        <thead class="table-success">
+                            <tr>
+                                <th>NH<sub>4</sub>, мг/л</th>
+                                <th>NO<sub>3</sub>, мг/л</th>
+                                <th>P, мг/л</th>
+                                <th>K, мг/л</th>
+                                <th>Ca, мг/л</th>
+                                <th>Mg, мг/л</th>
+                                <th>S, мг/л</th>
+                                <th>Cl, мг/л</th>
+                                <th>Fe, мкг/л</th>
+                                <th>Mn, мкг/л</th>
+                                <th>B, мкг/л</th>
+                                <th>Zn, мкг/л</th>
+                                <th>Cu, мкг/л</th>
+                                <th>Mo, мкг/л</th>
+                                <th>Co, мкг/л</th>
+                                <th>Si, мкг/л</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ p_profile.nh4 }}</td>
+                                <td>{{ p_profile.no3 }}</td>
+                                <td>{{ p_profile.p }}</td>
+                                <td>{{ p_profile.k }}</td>
+                                <td>{{ p_profile.ca }}</td>
+                                <td>{{ p_profile.mg }}</td>
+                                <td>{{ p_profile.s }}</td>
+                                <td>{{ p_profile.cl }}</td>
+                                <td>{{ p_profile.fe }}</td>
+                                <td>{{ p_profile.mn }}</td>
+                                <td>{{ p_profile.b }}</td>
+                                <td>{{ p_profile.zn }}</td>
+                                <td>{{ p_profile.cu }}</td>
+                                <td>{{ p_profile.mo }}</td>
+                                <td>{{ p_profile.co }}</td>
+                                <td>{{ p_profile.si }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="d-flex gap-2 justify-content-center">
+                <a href="{% url 'edit_p_profile' p_profile.id %}" class="btn btn-primary">Редактировать</a>
+                <a href="{% url 'delete_p_profile' p_profile.id %}" class="btn btn-danger">Удалить</a>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-muted text-center">Нет доступных профилей</p>
+        {% endfor %}
+        <a href="{% url 'add_p_profile' %}" class="btn btn-success mt-3">Добавить профиль питания</a>
+    </div>
+{% endblock %}

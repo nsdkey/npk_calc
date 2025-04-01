@@ -1,0 +1,109 @@
+{% extends "main/index.html" %}
+
+{% block title %}Калькулятор удобрений{% endblock %}
+{% block content %} 
+<div class="container">
+    <div class="card shadow-sm mx-auto" style="max-width: 700px;">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4">Выбор удобрений и профиля питания</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="fertilizerSearch" class="form-label">Поиск удобрения:</label>
+                    <input type="text" class="form-control mb-3" id="fertilizerSearch" placeholder="Начните вводить название удобрения...">
+
+                    <label class="form-label fw-bold">Выберите удобрения:</label>
+
+                    {% for fertilizer in fertilizers %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="fertilizers" value="{{ fertilizer.id }}" id="fert{{ fertilizer.id }}">
+                        <label class="form-check-label" for="fert{{ fertilizer.id }}">
+                            {{ fertilizer.name }}
+                            <small class="text-muted">(
+                                {% if fertilizer.nh4 %}NH<sub>4</sub>: {{ fertilizer.nh4 }}%{% endif %}
+                                {% if fertilizer.no3 %} NH<sub>3</sub>: {{ fertilizer.no3 }}%{% endif %}
+                                {% if fertilizer.p2o5 %} P<sub>2</sub>O<sub>5</sub>: {{ fertilizer.p2o5 }}%{% endif %}
+                                {% if fertilizer.k2o %} K<sub>2</sub>O: {{ fertilizer.k2o }}%{% endif %}
+                                {% if fertilizer.cao %} CaO: {{ fertilizer.cao }}%{% endif %}
+                                {% if fertilizer.mgo %} MgO: {{ fertilizer.mgo }}%{% endif %}
+                                {% if fertilizer.s %} S: {{ fertilizer.s }}%{% endif %}
+                                {% if fertilizer.cl %} Cl: {{ fertilizer.cl }}%{% endif %}
+                                {% if fertilizer.fe %} Fe: {{ fertilizer.fe }}%{% endif %}
+                                {% if fertilizer.mn %} Mn: {{ fertilizer.mn }}%{% endif %}
+                                {% if fertilizer.b %} B: {{ fertilizer.b }}%{% endif %}
+                                {% if fertilizer.zn %} Zn: {{ fertilizer.zn }}%{% endif %}
+                                {% if fertilizer.cu %} Cu: {{ fertilizer.cu }}%{% endif %}
+                                {% if fertilizer.mo %} Mo: {{ fertilizer.mo }}%{% endif %}
+                                {% if fertilizer.co %} Co: {{ fertilizer.co }}%{% endif %}
+                                {% if fertilizer.si %} Si: {{ fertilizer.si }}%{% endif %}
+                            )</small>
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <hr class="my-4">
+                <h5 class="text-center mb-3">Профиль питания</h5>
+                <div class="mb-4">
+                    <label for="ProfileSelect" class="form-label fw-bold">Выберите профиль питания:</label>
+                    <select class="form-select" id="ProfileSelect" name="p_profile">
+                        {% for profile in p_profiles %}
+                        <option value="{{ profile.id }}" 
+                            title="{% if profile.nh4 %}NH₄: {{ profile.nh4 }} мг/л; {% endif %}{% if profile.no3 %}NH₃: {{ profile.no3 }} мг/л; {% endif %}{% if profile.p %}P: {{ profile.p }} мг/л; {% endif %}{% if profile.k %}K: {{ profile.k }} мг/л; {% endif %}{% if profile.ca %}Ca: {{ profile.ca }} мг/л; {% endif %}{% if profile.mg %}Mg: {{ profile.mg }} мг/л; {% endif %}{% if profile.s %}S: {{ profile.s }} мг/л; {% endif %}{% if profile.cl %}Cl: {{ profile.cl }} мг/л; {% endif %}{% if profile.fe %}Fe: {{ profile.fe }} мкг/л; {% endif %}{% if profile.mn %}Mn: {{ profile.mn }} мкг/л; {% endif %}{% if profile.b %}B: {{ profile.b }} мкг/л; {% endif %}{% if profile.zn %}Zn: {{ profile.zn }} мкг/л; {% endif %}{% if profile.cu %}Cu: {{ profile.cu }} мкг/л; {% endif %}{% if profile.mo %}Mo: {{ profile.mo }} мкг/л; {% endif %}{% if profile.co %}Co: {{ profile.co }} мкг/л; {% endif %}{% if profile.si %}Si: {{ profile.si }} мкг/л{% endif %}">
+                        {{ profile.name }}
+                    </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Рассчитать</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('fertilizerSearch').addEventListener('input', function () {
+        const query = this.value.toLowerCase();
+        document.querySelectorAll('.form-check').forEach(check => {
+            const label = check.textContent.toLowerCase();
+            check.style.display = label.includes(query) ? 'block' : 'none';
+        });
+    });
+</script>
+
+<hr>
+
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group small">
+            <li class="list-group-item active">Подбор удобрений:</li>
+            {% for key, value in answer.items %}
+                <li class="list-group-item d-flex justify-content-between px-2 py-1">
+                    <span>{{ key }}</span>
+                    <span>{{ value }} мг/л</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <ul class="list-group small">
+            <li class="list-group-item active bg-success border-success">Недостающие элементы:</li>
+            {% for key, value in res.items %}
+                {% if value != 0 %}
+                <li class="list-group-item d-flex justify-content-between px-2 py-1">
+                    <span>{{ key }}</span>
+                    <span>{{ value }} мг/л</span>
+                </li>{% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% if er %}
+    <div class="alert alert-warning mt-2 py-1 px-2 small" role="alert">
+        {{ er }}
+    </div>
+{% endif %}
+
+{% endblock %}

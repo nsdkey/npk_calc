@@ -1,0 +1,64 @@
+{% extends "main/index.html" %}
+
+{% block title %}Профиль с удобрениями{% endblock %}
+{% block content %}
+<div class="container py-3">
+    <div class="card mb-3">
+        <div class="card-body text-center">
+            <h1 class="card-title">Профиль пользователя: {{ user.username }}</h1>
+        </div>
+    </div>
+
+    <div class="container text-center mt-4">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <a href="{% url 'profile' %}" class="btn btn-success w-100 py-3">Удобрения</a>
+            </div>
+            <div class="col-md-6">
+                <a href="{% url 'profile_pp' %}" class="btn btn-primary w-100 py-3">Профили питания</a>
+            </div>
+        </div>
+    </div>
+    
+
+    <h2 class="mb-3 text-success mt-4">Ваши удобрения:</h2>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        {% for fertilizer in fertilizers %}
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">{{ fertilizer.name }}</h3>
+                    <ul class="list-group list-group-flush">
+                        {% if fertilizer.nh4 != 0 %}<li class="list-group-item">NH<sub>4</sub>: {{ fertilizer.nh4 }}%</li>{% endif %}
+                        {% if fertilizer.no3 != 0 %}<li class="list-group-item">NH<sub>3</sub>: {{ fertilizer.no3 }}%</li>{% endif %}
+                        {% if fertilizer.p2o5 != 0 %}<li class="list-group-item">P<sub>2</sub>O<sub>5</sub>: {{ fertilizer.p2o5 }}%</li>{% endif %}
+                        {% if fertilizer.k2o != 0 %}<li class="list-group-item">K<sub>2</sub>O: {{ fertilizer.k2o }}%</li>{% endif %}
+                        {% if fertilizer.cao != 0 %}<li class="list-group-item">CaO: {{ fertilizer.cao }}%</li>{% endif %}
+                        {% if fertilizer.mgo != 0 %}<li class="list-group-item">MgO: {{ fertilizer.mgo }}%</li>{% endif %}
+                        {% if fertilizer.s != 0 %}<li class="list-group-item">S: {{ fertilizer.s }}%</li>{% endif %}
+                        {% if fertilizer.cl != 0 %}<li class="list-group-item">Cl: {{ fertilizer.cl }}%</li>{% endif %}
+                        {% if fertilizer.fe != 0 %}<li class="list-group-item">Fe: {{ fertilizer.fe }}%</li>{% endif %}
+                        {% if fertilizer.mn != 0 %}<li class="list-group-item">Mn: {{ fertilizer.mn }}%</li>{% endif %}
+                        {% if fertilizer.b != 0 %}<li class="list-group-item">B: {{ fertilizer.b }}%</li>{% endif %}
+                        {% if fertilizer.zn != 0 %}<li class="list-group-item">Zn: {{ fertilizer.zn }}%</li>{% endif %}
+                        {% if fertilizer.cu != 0 %}<li class="list-group-item">Cu: {{ fertilizer.cu }}%</li>{% endif %}
+                        {% if fertilizer.mo != 0 %}<li class="list-group-item">Mo: {{ fertilizer.mo }}%</li>{% endif %}
+                        {% if fertilizer.co != 0 %}<li class="list-group-item">Co: {{ fertilizer.co }}%</li>{% endif %}
+                        {% if fertilizer.si != 0 %}<li class="list-group-item">Si: {{ fertilizer.si }}%</li>{% endif %}
+                    </ul>
+                    <a href="{% url 'edit_fertilizer' fertilizer.id %}" class="btn btn-primary mt-3">Редактировать</a>
+                    <a href="{% url 'delete_fertilizer' fertilizer.id %}" class="btn btn-danger mt-3">Удалить</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col text-center">
+            <p class="text-muted">У вас пока нет удобрений</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'add_fertilizer' %}" class="btn btn-success mt-4">Добавить удобрение</a>
+</div>
+{% endblock %}
