@@ -1,5 +1,8 @@
 asgiref==3.8.1
 Django==5.1.6
+django-extensions==3.2.3
 numpy==2.2.3
+pydot==3.0.4
+pyparsing==3.2.3
 scipy==1.15.2
 sqlparse==0.5.3

@@ -31,6 +31,7 @@ class P_profile(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True, blank=True)
     is_public = models.BooleanField(default=False)
     name = models.CharField('Название',max_length=100)
+    growth_stage = models.CharField(max_length=20, choices=[('start', 'Старт'), ('veg', 'Вегетация'), ('late_veg', 'Поздняя вегетация'), ('fruiting', 'Плодоношение')], default='start', verbose_name='Стадия роста')
     nh4 = models.FloatField('NH4, мг/л', default=0)
     no3 = models.FloatField('NO3, мг/л', default=0)
     p = models.FloatField('P, мг/л', default=0)

@@ -27,7 +27,7 @@
         {% for p_profile in p_profiles %}
         <div class="card mb-4 shadow-sm p-3 rounded">
             <div class="card-body">
-                <h3 class="card-title text-center">{{ p_profile.name }}</h3>
+                <h3 class="card-title text-center">{{ p_profile.name }}({{ p_profile.get_growth_stage_display }})</h3>
                 <hr>
                 <div class="table-responsive">
                     <table class="table table-bordered text-center">

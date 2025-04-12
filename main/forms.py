@@ -9,4 +9,4 @@ class FertilizerForm(forms.ModelForm):
 class P_profileForm(forms.ModelForm):
     class Meta:
         model = P_profile
-        fields = ['name', 'nh4', 'no3', 'p', 'k', 'ca', 'mg', 's', 'cl', 'fe', 'mn', 'b', 'zn', 'cu', 'mo', 'co', 'si']
+        fields = ['name', 'growth_stage', 'nh4', 'no3', 'p', 'k', 'ca', 'mg', 's', 'cl', 'fe', 'mn', 'b', 'zn', 'cu', 'mo', 'co', 'si']

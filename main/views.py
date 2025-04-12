@@ -125,14 +125,17 @@ def calc(request):
     er=""
     profile=[]
     el_names=[]
+    selected_fertilizers = []
+    selected_profile = p_profiles[0]
     if request.method == 'POST':
         selected_fertilizers = Fertilizer.objects.filter(id__in=request.POST.getlist('fertilizers'))
         selected_profile = get_object_or_404(P_profile, id=request.POST.get('p_profile'))
+        water = float(request.POST.get('water_l'))
 
         if selected_fertilizers:
             f = []
-            profile = list(vars(selected_profile).values())[5:]
-            el_names = list(vars(selected_profile).keys())[5:]
+            profile = list(vars(selected_profile).values())[6:]
+            el_names = list(vars(selected_profile).keys())[6:]
             for i in range(8):
                 profile[i+8] = profile[i+8] * 0.001
 
@@ -162,27 +165,27 @@ def calc(request):
                         if abs(res[i]-profile[i])/profile[i] <= fault:
                             covered += 1
                         elif res[i] > profile[i]:
-                            penalty += ((res[i] - profile[i]) ** 2) * (0.5+((1-(i//8))*0.5))
+                            penalty += ((res[i] - profile[i]) ** 2) * (0.1+(((i//8))*0.9))
                         else:
-                            penalty += (profile[i] - res[i]) * (0.5+((1-(i//8))*0.5))
+                            penalty += (profile[i] - res[i]) * (0.1+(((i//8))*0.9))
                 return penalty - (covered*(1/16)*penalty)
             
             start_doses = [0] * len(selected_fertilizers)
             bounds = [(0, None) for _ in range(len(selected_fertilizers))]
 
             answer = minimize(func, start_doses, args=(f, profile), bounds=bounds, method='L-BFGS-B').x 
-            answer = list(map(lambda x: round(x), answer))
 
             for k in range(16):
                 for i in range(len(selected_fertilizers)):
                     profile[k] -= (f[i][k]*answer[i])/100
-            profile = list(map(lambda x: round(x), profile))
+            profile = list(map(lambda x: round(x * water), profile))
+            answer = list(map(lambda x: round(x * water), answer))
 
         else:
             er = "Выберите хотя бы 1 удобрение"
 
         
-    return render(request, 'main/calc.html', {'fertilizers': fertilizers, 'p_profiles': p_profiles, 'answer': dict(zip(names, answer)), 'er': er, 'res': dict(zip(el_names, profile))})
+    return render(request, 'main/calc.html', {'fertilizers': fertilizers, 'p_profiles': p_profiles, 'answer': dict(zip(names, answer)), 'er': er, 'res': dict(zip(el_names, profile)), 'selected_fertilizers': [x.id for x in selected_fertilizers], 'selected_profile': selected_profile.id})
 
 def calc_p_profile(request):
     start_profile = {
