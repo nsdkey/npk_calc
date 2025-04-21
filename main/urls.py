@@ -16,4 +16,10 @@ urlpatterns = [
     path('delete_p_profile/<int:pk>', views.delete_p_profile, name='delete_p_profile'),
     path('add_p_profile', views.add_p_profile, name='add_p_profile'),
     path('edit_p_profile/<int:pk>', views.edit_p_profile, name='edit_p_profile'),
+    path('upload_p_profiles', views.upload_p_profiles, name='upload_p_profiles'),
+    path('download_p_profiles', views.download_p_profiles, name='download_p_profiles'),
+    path('upload_fertilizers', views.upload_fertilizers, name='upload_fertilizers'),
+    path('download_fertilizers', views.download_fertilizers, name='download_fertilizers'),
+    path('download_p_profiles_example', views.download_p_profiles_example, name='download_p_profiles_example'),
+    path('download_fertilizers_example', views.download_fertilizers_example, name='download_fertilizers_example'),
 ]

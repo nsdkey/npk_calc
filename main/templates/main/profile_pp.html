@@ -33,8 +33,8 @@
                     <table class="table table-bordered text-center">
                         <thead class="table-success">
                             <tr>
-                                <th>NH<sub>4</sub>, мг/л</th>
                                 <th>NO<sub>3</sub>, мг/л</th>
+                                <th>NH<sub>4</sub>, мг/л</th>
                                 <th>P, мг/л</th>
                                 <th>K, мг/л</th>
                                 <th>Ca, мг/л</th>
@@ -53,8 +53,8 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{ p_profile.nh4 }}</td>
                                 <td>{{ p_profile.no3 }}</td>
+                                <td>{{ p_profile.nh4 }}</td>
                                 <td>{{ p_profile.p }}</td>
                                 <td>{{ p_profile.k }}</td>
                                 <td>{{ p_profile.ca }}</td>
@@ -82,6 +82,8 @@
         {% empty %}
         <p class="text-muted text-center">Нет доступных профилей</p>
         {% endfor %}
-        <a href="{% url 'add_p_profile' %}" class="btn btn-success mt-3">Добавить профиль питания</a>
+        <a href="{% url 'add_p_profile' %}" class="btn btn-success mt-3">Добавить профиль питания</a><br>
+        <a href="{% url 'upload_p_profiles' %}" class="btn btn-primary mt-3">Загрузить профили питания из файла</a>
+        <a href="{% url 'download_p_profiles' %}" class="btn btn-secondary mt-3">Сохранить ваши профили питания в файл</a>
     </div>
 {% endblock %}

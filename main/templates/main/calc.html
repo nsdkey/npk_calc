@@ -5,7 +5,7 @@
 <div class="container">
     <div class="card shadow-sm mx-auto" style="max-width: 700px;">
         <div class="card-body">
-            <h1 class="card-title text-center mb-4">Выбор удобрений и профиля питания</h1>
+            <h1 class="card-title text-center mb-4">Выбор профиля питания и удобрений</h1>
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-4">
@@ -32,7 +32,7 @@
                             {% for profile in p_profiles %}
                             <option value="{{ profile.id }}" {% if selected_profile == profile.id %}selected{% endif %}
                                 data-growth-stage="{{ profile.growth_stage }}"
-                                title="{% if profile.nh4 %}NH₄: {{ profile.nh4 }} мг/л; {% endif %}{% if profile.no3 %}NO₃: {{ profile.no3 }} мг/л; {% endif %}{% if profile.p %}P: {{ profile.p }} мг/л; {% endif %}{% if profile.k %}K: {{ profile.k }} мг/л; {% endif %}{% if profile.ca %}Ca: {{ profile.ca }} мг/л; {% endif %}{% if profile.mg %}Mg: {{ profile.mg }} мг/л; {% endif %}{% if profile.s %}S: {{ profile.s }} мг/л; {% endif %}{% if profile.cl %}Cl: {{ profile.cl }} мг/л; {% endif %}{% if profile.fe %}Fe: {{ profile.fe }} мкг/л; {% endif %}{% if profile.mn %}Mn: {{ profile.mn }} мкг/л; {% endif %}{% if profile.b %}B: {{ profile.b }} мкг/л; {% endif %}{% if profile.zn %}Zn: {{ profile.zn }} мкг/л; {% endif %}{% if profile.cu %}Cu: {{ profile.cu }} мкг/л; {% endif %}{% if profile.mo %}Mo: {{ profile.mo }} мкг/л; {% endif %}{% if profile.co %}Co: {{ profile.co }} мкг/л; {% endif %}{% if profile.si %}Si: {{ profile.si }} мкг/л{% endif %}">
+                                title="{% if profile.no3 %}NO₃: {{ profile.no3 }} мг/л; {% endif %}{% if profile.nh4 %}NH₄: {{ profile.nh4 }} мг/л; {% endif %}{% if profile.p %}P: {{ profile.p }} мг/л; {% endif %}{% if profile.k %}K: {{ profile.k }} мг/л; {% endif %}{% if profile.ca %}Ca: {{ profile.ca }} мг/л; {% endif %}{% if profile.mg %}Mg: {{ profile.mg }} мг/л; {% endif %}{% if profile.s %}S: {{ profile.s }} мг/л; {% endif %}{% if profile.cl %}Cl: {{ profile.cl }} мг/л; {% endif %}{% if profile.fe %}Fe: {{ profile.fe }} мкг/л; {% endif %}{% if profile.mn %}Mn: {{ profile.mn }} мкг/л; {% endif %}{% if profile.b %}B: {{ profile.b }} мкг/л; {% endif %}{% if profile.zn %}Zn: {{ profile.zn }} мкг/л; {% endif %}{% if profile.cu %}Cu: {{ profile.cu }} мкг/л; {% endif %}{% if profile.mo %}Mo: {{ profile.mo }} мкг/л; {% endif %}{% if profile.co %}Co: {{ profile.co }} мкг/л; {% endif %}{% if profile.si %}Si: {{ profile.si }} мкг/л{% endif %}">
                             {{ profile.name }}({{ profile.get_growth_stage_display }})
                         </option>
                             {% endfor %}
@@ -56,8 +56,8 @@
                             <label class="form-check-label" for="fert{{ fertilizer.id }}">
                                 {{ fertilizer.name }}<br>
                                 <small class="text-muted">(
-                                    {% if fertilizer.nh4 %}NH<sub>4</sub>: {{ fertilizer.nh4 }}%{% endif %}
                                     {% if fertilizer.no3 %} NO<sub>3</sub>: {{ fertilizer.no3 }}%{% endif %}
+                                    {% if fertilizer.nh4 %}NH<sub>4</sub>: {{ fertilizer.nh4 }}%{% endif %}
                                     {% if fertilizer.p2o5 %} P<sub>2</sub>O<sub>5</sub>: {{ fertilizer.p2o5 }}%{% endif %}
                                     {% if fertilizer.k2o %} K<sub>2</sub>O: {{ fertilizer.k2o }}%{% endif %}
                                     {% if fertilizer.cao %} CaO: {{ fertilizer.cao }}%{% endif %}
@@ -128,7 +128,7 @@
 <div class="row">
     <div class="col-md-6">
         <ul class="list-group small">
-            <li class="list-group-item active">Выбранные удобрения:</li>
+            <li class="list-group-item active">Дозировки выбранных удобрений:</li>
             {% for key, value in answer.items %}
                 <li class="list-group-item d-flex justify-content-between px-2 py-1">
                     <span>{{ key }}</span>
