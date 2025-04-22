@@ -80,7 +80,7 @@
             </div>
         </div>
         {% empty %}
-        <p class="text-muted text-center">Нет доступных профилей</p>
+            <p class="text-muted text-center">У вас пока нет профилей питания</p>
         {% endfor %}
         <a href="{% url 'add_p_profile' %}" class="btn btn-success mt-3">Добавить профиль питания</a><br>
         <a href="{% url 'upload_p_profiles' %}" class="btn btn-primary mt-3">Загрузить профили питания из файла</a>

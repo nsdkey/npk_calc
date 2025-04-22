@@ -42,15 +42,18 @@ def user_reg(request):
         username = request.POST['username']
         password = request.POST['password']
         password2 = request.POST['password2']
-        if password == password2:
-            if not User.objects.filter(username=username).exists():
-                user = User.objects.create_user(username=username, password=password)
-                login(request, user)
-                return redirect('home')
+        if password != '' and username != '':
+            if password == password2:
+                if username and not User.objects.filter(username=username).exists():
+                    user = User.objects.create_user(username=username, password=password)
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    er['error'] = "Пользователь с таким логином уже существует"
             else:
-                er['error'] = "Пользователь с таким логином уже существует"
+                er['error'] = "Пароли не совпадают"
         else:
-            er['error'] = "Пароли не совпадают"
+            er['error'] = "Введите логин и пароль"
     return render(request, 'main/reg.html', er)
 
 def profile(request):

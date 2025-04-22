@@ -53,13 +53,12 @@
             </div>
         </div>
         {% empty %}
-        <div class="col text-center">
-            <p class="text-muted">У вас пока нет удобрений</p>
-        </div>
+            <p></p>
+            <p class="text-muted text-center">У вас пока нет удобрений</p>
         {% endfor %}
     </div>
 
-    <a href="{% url 'add_fertilizer' %}" class="btn btn-success mt-4">Добавить удобрение</a><br>
+    <a href="{% url 'add_fertilizer' %}" class="btn btn-success mt-3">Добавить удобрение</a><br>
     <a href="{% url 'upload_fertilizers' %}" class="btn btn-primary mt-3">Загрузить удобрения из файла</a>
     <a href="{% url 'download_fertilizers' %}" class="btn btn-secondary mt-3">Сохранить ваши удобрения в файл</a>
 </div>

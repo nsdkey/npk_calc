@@ -57,7 +57,7 @@
                                 {{ fertilizer.name }}<br>
                                 <small class="text-muted">(
                                     {% if fertilizer.no3 %} NO<sub>3</sub>: {{ fertilizer.no3 }}%{% endif %}
-                                    {% if fertilizer.nh4 %}NH<sub>4</sub>: {{ fertilizer.nh4 }}%{% endif %}
+                                    {% if fertilizer.nh4 %} NH<sub>4</sub>: {{ fertilizer.nh4 }}%{% endif %}
                                     {% if fertilizer.p2o5 %} P<sub>2</sub>O<sub>5</sub>: {{ fertilizer.p2o5 }}%{% endif %}
                                     {% if fertilizer.k2o %} K<sub>2</sub>O: {{ fertilizer.k2o }}%{% endif %}
                                     {% if fertilizer.cao %} CaO: {{ fertilizer.cao }}%{% endif %}
@@ -83,7 +83,7 @@
 
                 <div class="mb-4 d-flex align-items-center">
                     <label for="waterL" class="form-label fw-bold me-2" style="white-space: nowrap;">Количество воды в литрах:</label>
-                    <input type="number" min = 0 class="form-control" id="waterL" name="water_l" value="1", required>
+                    <input type="number" min = "0" step="0.1" class="form-control" id="waterL" name="water_l" value="1", required>
                 </div>
 
                 <button type="submit" class="btn btn-success w-100">Рассчитать</button>
